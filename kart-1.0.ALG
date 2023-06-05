@@ -39,28 +39,37 @@ fimfuncao
 
 funcao cadastrar: caractere
 var
+   valor: inteiro
 inicio
-   se (qtdKarts < 15) entao
-      escreval("indice = ",kartIndice)
-      escreval("Informe o modelo do Kart: ")
-      leia(modelos[kartIndice])
-      escreval("Digite o valor de locação do Kart: ")
-      leia(precos[kartIndice])
 
-      lucroKart[kartIndice] <- (30/100) * precos[kartIndice] //calcula lucro do Kart
-      estadoLocacao[kartIndice] <- 1 //Passa estado para "locado" (1)
-      vezesLocado[kartIndice] <- vezesLocado[kartIndice] + 1 //Conta vezes locado
-      kartsNum[kartIndice] <- kartIndice //Define o número do Kart
-      kartsCadastrado[kartIndice] <- 1 //Marcar que existe um Kart no vetor
-      qtdKarts <- qtdKarts + 1 //Contabilizar Karts
-   senao
-      escreval("Não é possível cadastrar mais Karts.")
+   escreval("Quantos Karts você quer cadastrar?:")
+   leia(valor)
+   escreval("")
 
-      escreval("")
-      escreval("Aperte ENTER para continuar")
-      leia(pausar)
-      limpatela
-   fimse
+   para i de 1 ate valor faca
+      se (qtdKarts < 15) entao
+         escreval("Kart de número: ", kartIndice)
+         escreva("Informe o modelo do Kart: ")
+         leia(modelos[kartIndice])
+         escreva("Digite o valor de locação do Kart: ")
+         leia(precos[kartIndice])
+         escreval("")
+
+         lucroKart[kartIndice] <- (30/100) * precos[kartIndice] //calcula lucro do Kart
+         estadoLocacao[kartIndice] <- 1 //Passa estado para "locado" (1)
+         kartsNum[kartIndice] <- kartIndice //Define o número do Kart
+         kartsCadastrado[kartIndice] <- 1 //Marcar que existe um Kart no vetor
+         qtdKarts <- qtdKarts + 1 //Contabilizar Karts
+      senao
+         escreval("Não é possível cadastrar mais Karts.")
+         escreval("")
+         interrompa
+      fimse
+   fimpara
+
+   escreval("Aperte ENTER para continuar")
+   leia(pausar)
+   limpatela
 
    retorne ""
 fimfuncao
@@ -76,23 +85,62 @@ inicio
    fimpara
 fimfuncao
 
+funcao listarDisponiveis: caractere
+var
+   valor: inteiro
+inicio
+   para i de 1 ate 15 faca
+      //se existe um kart cadastrado e está disponível
+      se ((kartsCadastrado[i] = 1) e (estadoLocacao[i] = 1)) entao
+         escreval("Número do Kart: ", kartsNum[i])
+         escreval("Modelo: ", modelos[i])
+         escreval("Preço: ", precos[i])
+         escreval("Vezes em que foi locado: ", vezesLocado[i])
+         escreval("")
+      senao
+         valor<-valor+1
+      fimse
+   fimpara
+   se (valor=15) entao
+      se (qtdKarts = 0) entao
+         escreval("Nenhum Kart foi cadastrado!")
+         escreval("")
+      senao
+         escreval("Não há nenhum Kart disponível!")
+         escreval("")
+      fimse
+   fimse
+
+   escreval("Aperte ENTER para continuar")
+   leia(pausar)
+   limpatela
+
+   retorne ""
+fimfuncao
 
 Inicio
    para i de 1 ate 15 faca
       kartsCadastrado[i] <- 0
    fimpara
-   
+
    repita
       decisao <- menu
 
+      //Cadastrar Kart
       se (decisao = 1) entao
          escreval(cadastrar)
          escreval("")
       fimse
 
-
+      //Listar Karts disponíveis
       se (decisao = 2) entao
-         //
+         escreval(listarDisponiveis)
+         escreval("")
+      fimse
+
+      //Alugar um Kart
+      se (decisao = 4) entao
+         //vezesLocado[kartIndice] <- vezesLocado[kartIndice] + 1 ////Conta vezes locado
       fimse
 
    ate (decisao=10)
