@@ -4,9 +4,10 @@ Algoritmo "mariokartx86"
 
 Var
 
-   pausar: caractere
+   pausar, circuitos: caractere
    decisao, i: inteiro
-
+   valorCircuitos, cadastro, alocar: real
+   deletar, devolucao : real
    //KART
    qtdKarts: inteiro
    kartsCadastrado: vetor[1..15] de inteiro
@@ -17,18 +18,20 @@ Var
    estadoLocacao: vetor[1..15] de inteiro
    lucroKart: vetor[1..15] de real
    lucroTotalKart: vetor[1..15] de real
+   locCircuito: vetor [1..15] de real
+   situacaoCircuito: vetor [1..15] de real
 
 funcao menu: inteiro
 var
 inicio
    escreval("1. Cadastrar Kart")
-   escreval("2. Listar Karts disponíveis")
+   escreval("2. Listar Karts disponÃ­veis")
    escreval("3. Listar Karts locados")
    escreval("4. Alugar um Kart")
    escreval("5. Devolver um Kart")
    escreval("6. Kart que mais gerou lucro")
    escreval("7. Receita e lucro do dia")
-   escreval("8. Locação de circuito")
+   escreval("8. LocaÃ§Ã£o de circuito")
    escreval("9. Atualizar dia")
    escreval("10. Sair do programa")
    leia(decisao)
@@ -42,26 +45,26 @@ var
    valor: inteiro
 inicio
 
-   escreval("Quantos Karts você quer cadastrar?:")
+   escreval("Quantos Karts vocÃª quer cadastrar?:")
    leia(valor)
    escreval("")
 
    para i de 1 ate valor faca
       se (qtdKarts < 15) entao
-         escreval("Kart de número: ", kartIndice)
+         escreval("Kart de nÃºmero: ", kartIndice)
          escreva("Informe o modelo do Kart: ")
          leia(modelos[kartIndice])
-         escreva("Digite o valor de locação do Kart: ")
+         escreva("Digite o valor de locaÃ§Ã£o do Kart: ")
          leia(precos[kartIndice])
          escreval("")
 
          lucroKart[kartIndice] <- (30/100) * precos[kartIndice] //calcula lucro do Kart
          estadoLocacao[kartIndice] <- 1 //Passa estado para "locado" (1)
-         kartsNum[kartIndice] <- kartIndice //Define o número do Kart
+         kartsNum[kartIndice] <- kartIndice //Define o nÃºmero do Kart
          kartsCadastrado[kartIndice] <- 1 //Marcar que existe um Kart no vetor
          qtdKarts <- qtdKarts + 1 //Contabilizar Karts
       senao
-         escreval("Não é possível cadastrar mais Karts.")
+         escreval("NÃ£o Ã© possÃ­vel cadastrar mais Karts.")
          escreval("")
          interrompa
       fimse
@@ -90,11 +93,11 @@ var
    valor: inteiro
 inicio
    para i de 1 ate 15 faca
-      //se existe um kart cadastrado e está disponível
+      //se existe um kart cadastrado e estÃ¡ disponÃ­vel
       se ((kartsCadastrado[i] = 1) e (estadoLocacao[i] = 1)) entao
-         escreval("Número do Kart: ", kartsNum[i])
+         escreval("NÃºmero do Kart: ", kartsNum[i])
          escreval("Modelo: ", modelos[i])
-         escreval("Preço: ", precos[i])
+         escreval("PreÃ§o: ", precos[i])
          escreval("Vezes em que foi locado: ", vezesLocado[i])
          escreval("")
       senao
@@ -106,7 +109,7 @@ inicio
          escreval("Nenhum Kart foi cadastrado!")
          escreval("")
       senao
-         escreval("Não há nenhum Kart disponível!")
+         escreval("NÃ£o hÃ¡ nenhum Kart disponÃ­vel!")
          escreval("")
       fimse
    fimse
@@ -117,6 +120,42 @@ inicio
 
    retorne ""
 fimfuncao
+
+
+
+
+
+funcao circuito: caractere
+var
+   valorCircuitos, decisao : real
+inicio
+   escreval ("O que vocÃª deseja fazer?")
+   escreval ("1. Cadastrar um circuito.")
+   escreval ("2. Remover um circuito.")
+   escreval ("3. Alocar um circuito.")
+   escreval ("4. Devolver um circuito.")
+   leia (decisao)
+   se decisao = 1 entao
+      escreval ("Qual o nome do novo circuito?")
+      leia (cadastro)
+      escreval ("Qual o valor deste circuito?")
+      leia valorCircuitos // adicionar os 70%
+      se decisao = 2 entao
+         escreval ("Qual circuito vocÃª deseja remover?")
+         leia (remover)
+         escreva ("O circuito", remover, "serÃ¡ removido.")
+         se decisao = 3 entao
+         escreval ("Qual circuito vocÃª deseja alocar?")
+         ler (alocar)
+         se decisao = 4 entao
+         escreval ("Qual circuito serÃ¡ devolvido?")
+          leia (devolucao)
+          escreva ("O circuito" devolucao "serÃ¡ devolvido ao sistema.")
+         fimse
+         fimse
+         fimse
+         fimse
+
 
 Inicio
    para i de 1 ate 15 faca
@@ -132,7 +171,7 @@ Inicio
          escreval("")
       fimse
 
-      //Listar Karts disponíveis
+      //Listar Karts disponÃ­veis
       se (decisao = 2) entao
          escreval(listarDisponiveis)
          escreval("")
