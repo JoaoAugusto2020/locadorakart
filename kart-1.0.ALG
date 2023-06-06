@@ -37,6 +37,11 @@ inicio
    retorne decisao
 fimfuncao
 
+
+
+
+
+
 funcao cadastrar: caractere
 var
    valor: inteiro
@@ -56,7 +61,6 @@ inicio
          escreval("")
 
          lucroKart[kartIndice] <- (30/100) * precos[kartIndice] //calcula lucro do Kart
-         estadoLocacao[kartIndice] <- 1 //Passa estado para "locado" (1)
          kartsNum[kartIndice] <- kartIndice //Define o número do Kart
          kartsCadastrado[kartIndice] <- 1 //Marcar que existe um Kart no vetor
          qtdKarts <- qtdKarts + 1 //Contabilizar Karts
@@ -85,13 +89,21 @@ inicio
    fimpara
 fimfuncao
 
+
+
+
+
+
+
+
+
 funcao listarDisponiveis: caractere
 var
    valor: inteiro
 inicio
    para i de 1 ate 15 faca
       //se existe um kart cadastrado e está disponível
-      se ((kartsCadastrado[i] = 1) e (estadoLocacao[i] = 1)) entao
+      se ((kartsCadastrado[i] = 1) e (estadoLocacao[i] = 0)) entao
          escreval("Número do Kart: ", kartsNum[i])
          escreval("Modelo: ", modelos[i])
          escreval("Preço: ", precos[i])
@@ -101,13 +113,21 @@ inicio
          valor<-valor+1
       fimse
    fimpara
-   se (valor=15) entao
-      se (qtdKarts = 0) entao
-         escreval("Nenhum Kart foi cadastrado!")
-         escreval("")
-      senao
-         escreval("Não há nenhum Kart disponível!")
-         escreval("")
+   se (valor <> 15) entao
+      retorne ""
+   senao
+      se (valor=15) entao
+         se (qtdKarts = 0) entao
+            escreval("Nenhum Kart foi cadastrado!")
+            escreval("")
+
+            retorne "NC"
+         senao
+            escreval("Não há nenhum Kart disponível!")
+            escreval("")
+
+            retorne "ND"
+         fimse
       fimse
    fimse
 
@@ -115,8 +135,48 @@ inicio
    leia(pausar)
    limpatela
 
+fimfuncao
+
+
+
+
+
+
+
+funcao alocarKart: caractere
+var valor: inteiro
+inicio
+
+   para i de 1 ate 15 faca
+      //se existe um kart cadastrado e está disponível
+      se ((kartsCadastrado[i] = 1) e (estadoLocacao[i] = 0)) entao
+
+      senao
+         valor<-valor+1
+      fimse
+   fimpara
+   
+   se (valor <> 15) entao
+      escreval("Aperte ENTER para mostrar os Karts disponíveis para locação")
+      leia(valor)
+
+      escreval(listarDisponiveis)
+
+      escreval("Digite o número do Kart que você deseja alocar:")
+      leia(valor)
+
+      //continua
+      vezesLocado[kartIndice] <- vezesLocado[kartIndice] + 1 //Conta vezes locado
+
+   fimse
+
    retorne ""
 fimfuncao
+
+
+
+
+
 
 Inicio
    para i de 1 ate 15 faca
@@ -140,7 +200,8 @@ Inicio
 
       //Alugar um Kart
       se (decisao = 4) entao
-         //vezesLocado[kartIndice] <- vezesLocado[kartIndice] + 1 ////Conta vezes locado
+         escreval(alocarKart)
+         escreval("")
       fimse
 
    ate (decisao=10)
