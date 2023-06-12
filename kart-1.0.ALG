@@ -142,27 +142,68 @@ inicio
          escreval("Número do Kart: ", kartsNum[i])
          escreval("Modelo: ", modelos[i])
          escreval("Preço: ", precos[i])
+         escreval("Vezes em que foi locado: ", vezesLocado[i])
          escreval("")
+      senao
+         valor<-valor+1
+      fimse
+   fimpara
+   se (valor <> 15) entao
+      retorne ""
+   senao
+      se (valor=15) entao
+         se (qtdKarts = 0) entao
+            escreval("Nenhum Kart foi cadastrado!")
+            escreval("")
+
+            retorne "NC"
+         senao
+            escreval("Não há nenhum Kart disponível!")
+            escreval("")
+
+            retorne "ND"
+         fimse
+      fimse
+   fimse
+
+   escreval("Aperte ENTER para continuar")
+   leia(pausar)
+   limpatela
+
+fimfuncao
+
+
+
+
+
+funcao alocarKart: caractere
+var valor: inteiro
+inicio
+
+   para i de 1 ate 15 faca
+      //se existe um kart cadastrado e está disponível
+      se ((kartsCadastrado[i] = 1) e (estadoLocacao[i] = 0)) entao
 
       senao
          valor<-valor+1
       fimse
    fimpara
-   se(valor=15)entao
-      se (qtdKarts = 0) entao
-         escreval("Nenhum Kart foi cadastrado!")
-         escreval("")
-      senao
-         escreval("Nenhum Kart foi locado!")
-         escreval("")
-      fimse
+
+   se (valor <> 15) entao
+      escreval("Aperte ENTER para mostrar os Karts disponíveis para locação")
+      leia(valor)
+
+      escreval(listarDisponiveis)
+
+      escreval("Digite o número do Kart que você deseja alocar:")
+      leia(valor)
+
+      //continua
+      vezesLocado[kartIndice] <- vezesLocado[kartIndice] + 1 //Conta vezes locado
+
    fimse
-   escreval("Aperte ENTER para continuar")
-   leia(pausar)
-   limpatela
 
    retorne ""
-
 fimfuncao
 
 
@@ -237,9 +278,11 @@ Inicio
 
       //Alugar um Kart
       se (decisao = 4) entao
+         escreval(alocarKart)
+         escreval("")
          //vezesLocado[kartIndice] <- vezesLocado[kartIndice] + 1 ////Conta vezes locado
       fimse
-      
+
       //Locação de Circuito
       se (decisao = 8) entao
          escreval(locarCircuito)
