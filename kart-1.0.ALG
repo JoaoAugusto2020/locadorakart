@@ -124,6 +124,39 @@ fimfuncao
 
 
 
+funcao listarLocados: caractere
+var
+   valor: inteiro
+inicio
+   para i de 1 ate 15 faca
+      se(kartsCadastrado[i] = 1) e (estadoLocacao[i] = 1) entao
+         escreval("Número do Kart: ", kartsNum[i])
+         escreval("Modelo: ", modelos[i])
+         escreval("Preço: ", precos[i])
+         escreval("")
+
+      senao
+         valor<-valor+1
+      fimse
+   fimpara
+   se(valor=15)entao
+      se (qtdKarts = 0) entao
+         escreval("Nenhum Kart foi cadastrado!")
+         escreval("")
+      senao
+         escreval("Nenhum Kart foi locado!")
+         escreval("")
+      fimse
+   fimse
+   escreval("Aperte ENTER para continuar")
+   leia(pausar)
+   limpatela
+
+   retorne ""
+
+fimfuncao
+
+
 
 funcao circuito: caractere
 var
@@ -135,26 +168,30 @@ inicio
    escreval ("3. Alocar um circuito.")
    escreval ("4. Devolver um circuito.")
    leia (decisao)
+   
    se decisao = 1 entao
       escreval ("Qual o nome do novo circuito?")
       leia (cadastro)
       escreval ("Qual o valor deste circuito?")
       leia valorCircuitos // adicionar os 70%
+   senao
       se decisao = 2 entao
          escreval ("Qual circuito você deseja remover?")
          leia (remover)
          escreva ("O circuito", remover, "será removido.")
+      senao
          se decisao = 3 entao
-         escreval ("Qual circuito você deseja alocar?")
-         ler (alocar)
-         se decisao = 4 entao
-         escreval ("Qual circuito será devolvido?")
-          leia (devolucao)
-          escreva ("O circuito" devolucao "será devolvido ao sistema.")
+            escreval ("Qual circuito você deseja alocar?")
+            ler (alocar)
+         senao
+            se decisao = 4 entao
+               escreval ("Qual circuito será devolvido?")
+               leia (devolucao)
+               escreva ("O circuito" devolucao "será devolvido ao sistema.")
+            fimse
          fimse
-         fimse
-         fimse
-         fimse
+      fimse
+   fimse
 
 
 Inicio
