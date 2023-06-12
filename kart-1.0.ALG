@@ -1,11 +1,13 @@
-Algoritmo "mariokartx86"
+Algoritmo "kart-1.0"
 // Disciplina   : Conceitos de Algoritmos
 // Professor   : Gilberto Viana de Oliveira
 
 Var
 
-   pausar: caractere
+   pausar, circuitos: caractere
    decisao, i: inteiro
+   valorCircuitos, cadastro, alocar: real
+   deletar, devolucao : real
 
    //KART
    qtdKarts: inteiro
@@ -17,6 +19,8 @@ Var
    estadoLocacao: vetor[1..15] de inteiro
    lucroKart: vetor[1..15] de real
    lucroTotalKart: vetor[1..15] de real
+   locCircuito: vetor [1..15] de real
+   situacaoCircuito: vetor [1..15] de real
 
 funcao menu: inteiro
 var
@@ -36,7 +40,6 @@ inicio
 
    retorne decisao
 fimfuncao
-
 
 
 
@@ -93,6 +96,39 @@ fimfuncao
 
 
 
+funcao listarDisponiveis: caractere
+var
+   valor: inteiro
+inicio
+   para i de 1 ate 15 faca
+      //se existe um kart cadastrado e estao disponivel
+      se ((kartsCadastrado[i] = 1) e (estadoLocacao[i] = 0)) entao
+         escreval("Número do Kart: ", kartsNum[i])
+         escreval("Modelo: ", modelos[i])
+         escreval("Preço: ", precos[i])
+         escreval("Vezes em que foi locado: ", vezesLocado[i])
+         escreval("")
+      senao
+         valor<-valor+1
+      fimse
+   fimpara
+   se (valor=15) entao
+      se (qtdKarts = 0) entao
+         escreval("Nenhum Kart foi cadastrado!")
+         escreval("")
+      senao
+         escreval("Não há nenhum Kart disponível!")
+         escreval("")
+      fimse
+   fimse
+
+   escreval("Aperte ENTER para continuar")
+   leia(pausar)
+   limpatela
+
+   retorne ""
+fimfuncao
+
 
 
 
@@ -141,8 +177,6 @@ fimfuncao
 
 
 
-
-
 funcao alocarKart: caractere
 var valor: inteiro
 inicio
@@ -155,7 +189,7 @@ inicio
          valor<-valor+1
       fimse
    fimpara
-   
+
    se (valor <> 15) entao
       escreval("Aperte ENTER para mostrar os Karts disponíveis para locação")
       leia(valor)
@@ -173,6 +207,45 @@ inicio
    retorne ""
 fimfuncao
 
+
+
+
+
+funcao locarCircuito: caractere
+var
+   valorCircuitos, decisao : real
+inicio
+   escreval ("O que você deseja fazer?")
+   escreval ("1. Cadastrar um circuito.")
+   escreval ("2. Remover um circuito.")
+   escreval ("3. Alocar um circuito.")
+   escreval ("4. Devolver um circuito.")
+   leia (decisao)
+
+   se decisao = 1 entao
+      escreval ("Qual o nome do novo circuito?")
+      leia (cadastro)
+      escreval ("Qual o valor deste circuito?")
+      leia valorCircuitos // adicionar os 70%
+   senao
+      se decisao = 2 entao
+         escreval ("Qual circuito você deseja remover?")
+         leia (remover)
+         escreva ("O circuito", remover, "será removido.")
+      senao
+         se decisao = 3 entao
+            escreval ("Qual circuito você deseja alocar?")
+            ler (alocar)
+         senao
+            se (decisao = 4) entao
+               escreval ("Qual circuito será devolvido?")
+               leia (devolucao)
+               escreva ("O circuito", devolucao, "será devolvido ao sistema.")
+            fimse
+         fimse
+      fimse
+   fimse
+fimfuncao
 
 
 
@@ -198,9 +271,22 @@ Inicio
          escreval("")
       fimse
 
+      //Listar Karts locados
+      se (decisao = 3) entao
+         escreval(listarLocados)
+         escreval("")
+      fimse
+
       //Alugar um Kart
       se (decisao = 4) entao
          escreval(alocarKart)
+         escreval("")
+         //vezesLocado[kartIndice] <- vezesLocado[kartIndice] + 1 ////Conta vezes locado
+      fimse
+      
+      //Locação de Circuito
+      se (decisao = 8) entao
+         escreval(locarCircuito)
          escreval("")
       fimse
 
