@@ -133,13 +133,12 @@ fimfuncao
 
 
 
-funcao listarDisponiveis: caractere
+funcao listarLocados: caractere
 var
    valor: inteiro
 inicio
    para i de 1 ate 15 faca
-      //se existe um kart cadastrado e está disponível
-      se ((kartsCadastrado[i] = 1) e (estadoLocacao[i] = 0)) entao
+      se(kartsCadastrado[i] = 1) e (estadoLocacao[i] = 1) entao
          escreval("Número do Kart: ", kartsNum[i])
          escreval("Modelo: ", modelos[i])
          escreval("Preço: ", precos[i])
@@ -283,7 +282,7 @@ Inicio
          escreval("")
          //vezesLocado[kartIndice] <- vezesLocado[kartIndice] + 1 ////Conta vezes locado
       fimse
-      
+
       //Locação de Circuito
       se (decisao = 8) entao
          escreval(locarCircuito)
