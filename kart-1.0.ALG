@@ -447,12 +447,11 @@ fimfuncao
 
 //ATUALIZAR DIA
 
-funcao atualizarDia: inteiro
+funcao atualizarDia: caractere
 var
-   valor, opcao: inteiro
+   renovar, valor, opcao: inteiro
 
 inicio
-
 
    escreval ("Você deseja atualizar o dia?")
    escreval ("1. SIM.")
@@ -462,34 +461,32 @@ inicio
 
    se (opcao=1) entao
 
+      //atualizar o circuito
       estadoCircuito <- 0
-      limpatela
+      escreval("")
       escreval("O circuito foi atualizado")
+      escreval("")
       escreval("")
       escreval("Clique ENTER para continuar.")
       leia(pausar)
       limpatela
-      escreval("Quais dos seguintes karts deseja renovar?")
-      escreval("")
-      escreval("")
-      escreval("Clique ENTER para continuar.")
 
+      //Renovar os karts
+      escreval("Quais dos seguintes karts deseja renovar?")
+
+      escreval("")
+      escreval("")
+
+      se (estadoLocacao[1] = 0) entao
+         escreval("Não há karts alocados")
+         escreval("Clique ENTER para continuar.")
+         leia(pausar)
+      fimse
       para i de 1 ate 15 faca
+
          se (estadoLocacao[i] = 1) entao
             //perguntar se quer manter
-
-            escreval(listarLocados)
-
-            escreval("Digite o número do Kart que você deseja re:")
-            leia(valor)
-         fimse
-      fimpara
-
-      para i de 1 ate 15 faca
-         se ((kartsNum[i] = valor) e (estadoLocacao[i] = 1) e (kartsCadastrado[i] = 1)) entao
-            escreval("")
-            escreval("Você devolveu o seguinte Kart:")
-
+            
             escreval("")
             escreval("Número do Kart: ", kartsNum[i])
             escreval("Modelo: ", modelos[i])
@@ -497,29 +494,43 @@ inicio
             escreval("Vezes em que foi locado: ", vezesLocado[i])
             escreval("")
 
-            estadoLocacao[i] <- 0 //Marca como disponível
+            escreval("Deseja renovar esse kart?")
+            escreval("1.SIM")
+            escreval("2.NÃO")
+            leia(renovar)
+
+            se (renovar=1) entao
+               escreval("Você renovou o kart", kartsNum[i])
+               escreval("")
+               escreval("")
+               escreval("Clique ENTER para continuar.")
+               leia(pausar)
+
+            senao
+               se (renovar=2) entao
+                  escreval("Você devolveu o kart", kartsNum[i])
+                  escreval("")
+                  escreval("")
+                  estadoLocacao[i] <- 0
+
+                  escreval("Clique ENTER para continuar.")
+                  leia(pausar)
+               fimse
+
+            fimse
          fimse
       fimpara
-
-      se (estadoLocacao[i] = 0) entao
-         escreval ("Não há karts locados")
-      fimse
-      leia(pausar)
-
+      limpatela
 
    senao
       se (opcao=2) entao
          escreval("Clique ENTER para continuar.")
          leia(pausar)
       fimse
-      limpatela
    fimse
+   
    limpatela
-
-
-
-
-
+   
 
 fimfuncao
 
@@ -585,3 +596,31 @@ Inicio
    ate (decisao=10)
 
 Fimalgoritmo
+
+
+escreval(listarLocados)
+
+
+
+para i de 1 ate 15 faca
+   se ((estadoLocacao[i] = 1) e (kartsCadastrado[i] = 1)) entao
+      escreval("")
+      escreval("Você renovou o seguinte Kart:")
+
+      escreval("")
+      escreval("Número do Kart: ", kartsNum[i])
+      escreval("Modelo: ", modelos[i])
+      escreval("Preço: ", precos[i])
+      escreval("Vezes em que foi locado: ", vezesLocado[i])
+      escreval("")
+
+   senao
+      se  ((kartsNum[i] = valor) e (estadoLocacao[i] = 1) e (kartsCadastrado[i] = 1)) entao
+         estadoLocacao[i] <- 0 //Marca como disponível
+      fimse
+   fimse
+fimpara
+se (estadoLocacao[i] = 0) entao
+   escreval ("Não há karts locados")
+fimse
+limpatela
