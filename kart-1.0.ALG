@@ -23,7 +23,8 @@ Var
    nomeCircuito, novoNome: caractere
    valorCircuito, novoValor, receitaCircuito: real
    modificarCircuito, estadoCircuito, devolverCircuito: inteiro
-
+   circuitoVezesLocado: inteiro
+   
 funcao menu: inteiro
 var
 inicio
@@ -287,38 +288,67 @@ inicio
 fimfuncao
 
 
+//Kart que mais gerou lucro
+
 funcao melhorKart: caractere
 var
-   maisLocado, numMaisLocado: inteiro
+   numMaiorLucro: inteiro
+   maiorLucro: real
 inicio
-   para i de 1 ate 15 faca
-      se (vezesLocado[i] > maisLocado) entao
-         maisLocado <- vezesLocado[i]
-         numMaisLocado <- i
-      fimse
-   fimpara
+  para i de 1 ate 15 faca
+       se (vezesLocado[i] > 0) e (lucroKart[i] * vezesLocado[i] > maiorLucro) entao
+          maiorLucro <- lucroKart[i] * vezesLocado[i]
+          numMaiorLucro <- i
+       fimse
+  fimpara
 
-   se (maisLocado = 0) entao
-      escreval("Nenhum Kart foi alugado ainda.")
-   senao
+  se (maiorLucro = 0) entao
+     escreval("Nenhum Kart foi alugado ainda.")
+  senao
+       para i de 1 ate 15 faca
+            se (i = numMaiorLucro) entao
+               escreval("Número do Kart: ", kartsNum[i])
+               escreval("Modelo: ", modelos[i])
+               escreval("Preço: ", precos[i])
+               escreval("Vezes em que foi locado: ", vezesLocado[i])
+               escreval("Lucro total do kart: R$", lucroKart[i] * vezesLocado[i])
+               escreval("")
+            fimse
+       fimpara
+  fimse
+       escreval("Aperte ENTER para continuar")
+       leia(pausar)
+       limpatela
+fimfuncao
+
+
+//Receita e lucro do dia
+
+funcao receitaDiaria: caractere
+var
+receita, lucro: real
+Inicio
       para i de 1 ate 15 faca
-         se (vezesLocado[i] = numMaisLocado) entao
-            escreval("Número do Kart: ", kartsNum[i])
-            escreval("Modelo: ", modelos[i])
-            escreval("Preço: ", precos[i])
-            escreval("Vezes em que foi locado: ", vezesLocado[i])
-            escreval("Lucro total do kart: R$", lucroKart[i] * vezesLocado[i])
-            escreval("")
-         fimse
+           se (estadoLocacao[i] = 1) entao
+             receita <- receita + precos[i]
+             lucro <- lucro + lucroKart[i]
+           fimse
       fimpara
-   fimse
+      
+      se (circuitoVezesLocado > 0) entao
+         receita <- receita + receitaCircuito * circuitoVezesLocado
+      fimse
+      se (receita = 0) entao
+         escreval("Não há receita ou lucro ainda.")
+      senao
+         escreval("Receita do dia: R$", receita)
+         escreval("Lucro do dia: R$", lucro)
+      fimse
+
    escreval("Aperte ENTER para continuar")
    leia(pausar)
    limpatela
 fimfuncao
-
-
-
 
 
 funcao locarCircuito: caractere
@@ -388,6 +418,7 @@ inicio
                escreval("")
                escreval("O circuito ", nomeCircuito, " foi locado.")
                estadoCircuito <- 1
+               circuitoVezesLocado <- circuitoVezesLocado + 1
                receitaCircuito <- valorCircuito * (70/100)
                escreval("Aperte ENTER para continuar.")
                leia(pausar)
@@ -442,8 +473,6 @@ inicio
 
    limpatela
 fimfuncao
-
-
 
 //ATUALIZAR DIA
 
@@ -515,12 +544,6 @@ inicio
       limpatela
    fimse
    limpatela
-
-
-
-
-
-
 fimfuncao
 
 
@@ -567,6 +590,12 @@ Inicio
       //Kart que mais gerou lucro
       se (decisao = 6) entao
          escreval(melhorKart)
+         escreval("")
+      fimse
+      
+      //Receita e lucro do dia
+      se (decisao = 7) entao
+         escreval(receitaDiaria)
          escreval("")
       fimse
 
