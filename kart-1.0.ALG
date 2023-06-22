@@ -596,31 +596,3 @@ Inicio
    ate (decisao=10)
 
 Fimalgoritmo
-
-
-escreval(listarLocados)
-
-
-
-para i de 1 ate 15 faca
-   se ((estadoLocacao[i] = 1) e (kartsCadastrado[i] = 1)) entao
-      escreval("")
-      escreval("Você renovou o seguinte Kart:")
-
-      escreval("")
-      escreval("Número do Kart: ", kartsNum[i])
-      escreval("Modelo: ", modelos[i])
-      escreval("Preço: ", precos[i])
-      escreval("Vezes em que foi locado: ", vezesLocado[i])
-      escreval("")
-
-   senao
-      se  ((kartsNum[i] = valor) e (estadoLocacao[i] = 1) e (kartsCadastrado[i] = 1)) entao
-         estadoLocacao[i] <- 0 //Marca como disponível
-      fimse
-   fimse
-fimpara
-se (estadoLocacao[i] = 0) entao
-   escreval ("Não há karts locados")
-fimse
-limpatela
